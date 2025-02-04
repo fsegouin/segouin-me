@@ -30,6 +30,37 @@ const Terminal = ({ lines }: TerminalProps) => {
     };
   }, []);
 
+  // Theme detection
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleThemeChange = (e: MediaQueryListEvent) => {
+      document.documentElement.style.setProperty(
+        "--terminal-bg",
+        e.matches ? "#252525" : "#fdf6e3"
+      );
+      document.documentElement.style.setProperty(
+        "--terminal-header-bg",
+        e.matches ? "#1a1a1a" : "#eee8d5"
+      );
+      document.documentElement.style.setProperty(
+        "--terminal-text",
+        e.matches ? "#f5f5f5" : "#002b36"
+      );
+      document.documentElement.style.setProperty(
+        "--terminal-shadow",
+        e.matches ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.15)"
+      );
+    };
+
+    // Add listener for theme changes
+    mediaQuery.addEventListener("change", handleThemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleThemeChange);
+    };
+  }, []);
+
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => setIsVisible(false), 300);
@@ -290,17 +321,17 @@ const Terminal = ({ lines }: TerminalProps) => {
       const baseText = text.replace(/, done\.$/, "");
 
       // Find all patterns including network speed
-      const speedPattern = /(\d+(?:\.\d+)?)\s*MiB\/s/;
+      const speedPattern = /(\d+(?:\.\d+)?)\s*(?:KiB|MiB)\/s/;
       const speedMatch = baseText.match(speedPattern);
 
       // Find numbers in specific patterns:
       // 1. Number followed by %
       // 2. Number inside parentheses (n/total)
-      // 3. Number before MiB
+      // 3. Number before KiB or MiB
       const patterns = [
         /(\d+)%/, // Matches "n%"
         /\((\d+)\/\d+\)/, // Matches "(n/total)"
-        /(\d+(?:\.\d+)?)\s*MiB(?!\/)/, // Matches "n.nn MiB" not followed by "/"
+        /(\d+(?:\.\d+)?)\s*(?:KiB|MiB)(?!\/)/, // Matches "n.nn KiB" or "n.nn MiB" not followed by "/"
       ];
 
       const matches = percentages.map((_, index) => {
@@ -359,8 +390,11 @@ const Terminal = ({ lines }: TerminalProps) => {
 
           if (match.isSpeed) {
             // For network speed, generate a random value that increases with progress
+            const isKiB = baseText
+              .slice(match.index, match.index + match.length + 5)
+              .includes("KiB");
             const minSpeed = 0;
-            const maxSpeed = 10;
+            const maxSpeed = isKiB ? 400 : 10; // Higher range for KiB, lower for MiB
             const speedRange = maxSpeed - minSpeed;
             const minCurrentSpeed =
               minSpeed + speedRange * (step / steps) * 0.8;
