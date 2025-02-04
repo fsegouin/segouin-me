@@ -20,53 +20,54 @@ export default function Home() {
     {
       type: "percentage-output",
       content: "remote: Enumerating objects: 0, done.",
-      percentages: [{ start: 0, end: 17788, duration: 1500 }],
+      percentages: [{ start: 0, end: 34, duration: 1000 }],
       typeDelay: 0,
       finishDelay: 300,
     },
     {
       type: "percentage-output",
-      content: "remote: Counting objects: 0% (0/55), done.",
+      content: "remote: Counting objects: 0% (0/34), done.",
       percentages: [
-        { start: 0, end: 100, duration: 1200 },
-        { start: 0, end: 55, duration: 1200 },
+        { start: 0, end: 100, duration: 1000 },
+        { start: 0, end: 34, duration: 1000 },
       ],
       typeDelay: 0,
       finishDelay: 300,
     },
     {
       type: "percentage-output",
-      content: "remote: Compressing objects: 0% (0/46), done.",
+      content: "remote: Compressing objects: 0% (0/29), done.",
       percentages: [
-        { start: 0, end: 100, duration: 2000 },
-        { start: 0, end: 46, duration: 2000 },
+        { start: 0, end: 100, duration: 1000 },
+        { start: 0, end: 29, duration: 1000 },
       ],
       typeDelay: 0,
       finishDelay: 1000,
     },
     {
       type: "output",
-      content: "remote: Total 17788 (delta 31), reused 9 (delta 9), pack-reuse",
+      content:
+        "remote: Total 34 (delta 3), reused 34 (delta 3), pack-reused 0 (from 0)",
       finishDelay: 1000,
       typeDelay: 0,
     },
     {
       type: "percentage-output",
-      content: "Receiving objects: 0% (0/17788), 0.00 MiB | 5.77 MiB/s",
+      content: "Receiving objects: 0% (0/34), 0.00 KiB | 5.77 MiB/s",
       percentages: [
         { start: 0, end: 100, duration: 2000 },
-        { start: 0, end: 17788, duration: 2000 },
-        { start: 0, end: 27.09, duration: 2000 },
+        { start: 0, end: 34, duration: 2000 },
+        { start: 0, end: 67.24, duration: 2000 },
       ],
       typeDelay: 0,
       finishDelay: 1000,
     },
     {
       type: "percentage-output",
-      content: "Resolving deltas: 100% (10422/10422), done.",
+      content: "Resolving deltas: 100% (0/3), done.",
       percentages: [
-        { start: 0, end: 100, duration: 2000 },
-        { start: 0, end: 10422, duration: 2000 },
+        { start: 0, end: 100, duration: 1000 },
+        { start: 0, end: 3, duration: 1000 },
       ],
       typeDelay: 0,
       finishDelay: 1000,
@@ -111,7 +112,7 @@ export default function Home() {
         ],
         [
           { text: "I'm a software engineer and ", color: "blue" },
-          { text: "design lover", color: "pink" },
+          { text: "design enthusiast", color: "pink" },
           { text: " at heart.", color: "blue", deleteDelay: 3000 },
         ],
         [
